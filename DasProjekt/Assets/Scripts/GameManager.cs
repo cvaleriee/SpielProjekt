@@ -49,7 +49,15 @@ public class GameManager : MonoBehaviour
             GameObject var = obstacles[index];
             Instantiate(var, spawnPos, var.transform.rotation);
         }
-        
+
+    }
+    
+        private void ScoreTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // AddScore(1);
+        }
     }
 
 }

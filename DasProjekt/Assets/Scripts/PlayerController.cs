@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
         {
             playeroneRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false;
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
             gameOver = true;
+            isOnGround = false;
             Debug.Log("Game Over!");
         }
     }
@@ -48,4 +49,5 @@ public class PlayerController : MonoBehaviour
             hitPortal = true;
         }
     }
+
 }
