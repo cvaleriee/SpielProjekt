@@ -12,12 +12,19 @@ public class GameManager : MonoBehaviour
     private int score;
 
     public List<GameObject> obstacles;
-    
-    // public GameObject obstaclePrefab;
+    public GameObject portalPrefab;
+
     private Vector3 spawnPos = new Vector3(20, 0, 0);
-    private float startDelay = 2f;
-    private float repeatRate = 2f;
+    private Vector3 spawnPos2 = new Vector3(20, 1.5f, 0);
+    private float startDelay = 5f;
+
+    // private float repeatRate = 2f;
+
     private PlayerController playerControllerScript;
+    public int GetScore()
+        {
+        return score;
+        }
 
 
     // Start is called before the first frame update
@@ -25,8 +32,40 @@ public class GameManager : MonoBehaviour
     {
         score = 0;
         UpdateScore(0);
-        InvokeRepeating("SpawnObstacle", startDelay, repeatRate);
-        playerControllerScript = GameObject. Find("Player One").GetComponent<PlayerController>();
+        StartCoroutine(SpawnObstacleRoutine());
+        StartCoroutine(SpawnPortalRoutine());
+        playerControllerScript = GameObject.Find("Player One").GetComponent<PlayerController>();
+    }
+
+    IEnumerator SpawnObstacleRoutine()
+    {
+        yield return new WaitForSeconds(startDelay);
+
+        while (playerControllerScript.gameOver == false)
+        {
+            // spawning random obstacles
+            int index = Random.Range(0, obstacles.Count);
+            GameObject var = obstacles[index];
+            Instantiate(var, spawnPos, var.transform.rotation);
+
+            // wait a random time
+            float randomDelay = Random.Range(0.8f, (2.2f - Time.timeSinceLevelLoad * 0.0005f));
+            yield return new WaitForSeconds(randomDelay);
+        }
+    }
+    
+    IEnumerator SpawnPortalRoutine()
+    {
+        yield return new WaitForSeconds(startDelay + 10f);
+ 
+        while (playerControllerScript.gameOver == false)
+        {
+            Instantiate(portalPrefab, spawnPos2, portalPrefab.transform.rotation);
+ 
+            // wait a random time
+            float randomDelay = Random.Range(8f, 22f);
+            yield return new WaitForSeconds(randomDelay);
+        }
     }
 
     // Update is called once per frame
@@ -35,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void UpdateScore(int scoreToAdd)
+    public void UpdateScore(int scoreToAdd)
     {
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
@@ -50,14 +89,6 @@ public class GameManager : MonoBehaviour
             Instantiate(var, spawnPos, var.transform.rotation);
         }
 
-    }
-    
-        private void ScoreTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            // AddScore(1);
-        }
     }
 
 }
