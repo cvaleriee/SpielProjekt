@@ -4,38 +4,48 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody playeroneRb;
-    public float jumpForce;
-    public float gravityModifier;
+    private Rigidbody playerRb;
+    public float jumpForce = 20f;
+    public float gravityModifier = 5f;
     public bool isOnGround = true;
     public bool gameOver = false;
     public int hitPortal = 0;
+
     public GameManager gameManager;
     public int pointValue;
 
+    public bool isRunner = true;
+    private bool canSwap = true; 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        playeroneRb = GetComponent<Rigidbody>();
-        Physics.gravity *= gravityModifier;
+        playerRb = GetComponent<Rigidbody>();
         gameManager = FindObjectOfType<GameManager>();
+
+        if (isRunner)
+        {
+            Physics.gravity = Physics.gravity * gravityModifier;
+        }
+        playerRb.useGravity = isRunner;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (hitPortal % 2 == 0)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && isOnGround && gameOver == false)
+            if (Input.GetKeyDown(KeyCode.Space) && isOnGround && gameOver == false && isRunner)
             {
-                playeroneRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isOnGround = false;
                 gameManager.UpdateScore(1);
             }
 
-            if (Input.GetKeyDown(KeyCode.P) && gameOver == false)
+            if (Input.GetKeyDown(KeyCode.P) && gameOver == false && !isRunner)
             {
                 destroyNearObstacle();
             }
@@ -43,16 +53,23 @@ public class PlayerController : MonoBehaviour
 
         else if (hitPortal % 2 != 0)
         {
-            if (Input.GetKeyDown(KeyCode.Return) && isOnGround && gameOver == false)
+            if (Input.GetKeyDown(KeyCode.Return) && isOnGround && gameOver == false && isRunner)
             {
-                playeroneRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isOnGround = false;
                 gameManager.UpdateScore(1);
             }
-            if (Input.GetKeyDown(KeyCode.A) && gameOver == false)
+            if (Input.GetKeyDown(KeyCode.A) && gameOver == false && !isRunner)
             {
                 destroyNearObstacle();
             }
+        }
+
+        if (!isRunner && !gameOver)
+        {
+            Vector3 pos = transform.position;
+            pos.y = 6f;  
+            transform.position = pos;
         }
     }
 
@@ -72,11 +89,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Portal"))
+        if (other.CompareTag("Portal") && canSwap)
         {
-            hitPortal++;
-            StartCoroutine(TemporaryLog("SWAP!", 2f));
+            StartCoroutine(HandlePortalSwap());
         }
+    }
+
+    IEnumerator HandlePortalSwap()
+    {
+        canSwap = false;
+        hitPortal++;
+        StartCoroutine(TemporaryLog("SWAP!", 2f));
+        gameManager.SwapPlayers();
+
+        yield return new WaitForSeconds(0.5f);
+        canSwap = true;
     }
 
     IEnumerator TemporaryLog(string message, float duration)

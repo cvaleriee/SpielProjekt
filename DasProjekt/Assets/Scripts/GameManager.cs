@@ -8,6 +8,9 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject playerOne;
+    public GameObject playerTwo;
+
     public TextMeshProUGUI scoreText;
     private int score;
 
@@ -18,14 +21,14 @@ public class GameManager : MonoBehaviour
     private Vector3 spawnPos2 = new Vector3(20, 1.5f, 0);
     private float startDelay = 5f;
 
-    // private float repeatRate = 2f;
-
     private PlayerController playerControllerScript;
     public int GetScore()
         {
         return score;
         }
 
+    private Material playerOneMaterial;
+    private Material playerTwoMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +37,14 @@ public class GameManager : MonoBehaviour
         UpdateScore(0);
         StartCoroutine(SpawnObstacleRoutine());
         StartCoroutine(SpawnPortalRoutine());
-        playerControllerScript = GameObject.Find("Player One").GetComponent<PlayerController>();
+        playerControllerScript = playerOne.GetComponent<PlayerController>();
+
+        // Material
+        playerOneMaterial = new Material(playerOne.GetComponent<Renderer>().material);
+        playerTwoMaterial = new Material(playerTwo.GetComponent<Renderer>().material);
+
+        playerOne.GetComponent<Renderer>().material = playerOneMaterial;
+        playerTwo.GetComponent<Renderer>().material = playerTwoMaterial;
     }
 
     IEnumerator SpawnObstacleRoutine()
@@ -89,6 +99,40 @@ public class GameManager : MonoBehaviour
             Instantiate(var, spawnPos, var.transform.rotation);
         }
 
+    }
+
+    public void SwapPlayers()
+    {
+        // Swap positions
+        Vector3 tempPos = playerOne.transform.position;
+        playerOne.transform.position = playerTwo.transform.position;
+        playerTwo.transform.position = tempPos;
+
+        // Swap roles 
+        var p1Controller = playerOne.GetComponent<PlayerController>();
+        var p2Controller = playerTwo.GetComponent<PlayerController>();
+
+        bool playerOneWasRunner = p1Controller.isRunner;
+        p1Controller.isRunner = p2Controller.isRunner;
+        p2Controller.isRunner = playerOneWasRunner;
+
+        // change gravity
+        Rigidbody rb1 = playerOne.GetComponent<Rigidbody>();
+        Rigidbody rb2 = playerTwo.GetComponent<Rigidbody>();
+
+        rb1.useGravity = p1Controller.isRunner;
+        rb2.useGravity = p2Controller.isRunner;
+
+        // change material
+        Renderer materialOne = playerOne.GetComponent<Renderer>();
+        Renderer materialTwo = playerTwo.GetComponent<Renderer>();
+
+        Material tempMat = playerOneMaterial;
+        playerOneMaterial = playerTwoMaterial;
+        playerTwoMaterial = tempMat;
+
+        materialOne.material = playerOneMaterial;
+        materialTwo.material = playerTwoMaterial;
     }
 
 }
