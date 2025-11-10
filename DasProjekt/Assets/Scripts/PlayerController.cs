@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    private Vector3 beginningGravity;
+
     private Rigidbody playerRb;
     public float jumpForce = 20f;
     public float gravityModifier = 5f;
@@ -16,7 +19,6 @@ public class PlayerController : MonoBehaviour
 
     public bool isRunner = true;
     private bool canSwap = true; 
-
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +85,7 @@ public class PlayerController : MonoBehaviour
         {
             gameOver = true;
             isOnGround = false;
+            gameManager.GameOver();
             Debug.Log("Game Over!");
         }
     }

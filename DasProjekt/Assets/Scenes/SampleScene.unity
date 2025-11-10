@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player 1: Capslock (Jump) + "A" Destroy
+  m_text: 'Player 1: Spacebar (Jump) + "A" Destroy
 
     Player 2: Enter (Jump) +
     "P" Destroy'
@@ -1177,6 +1177,10 @@ MonoBehaviour:
   - {fileID: 6989750876255458244, guid: e13c3650006eb4674b6bfcf73d291dad, type: 3}
   - {fileID: 5984862768031323335, guid: 806d7f10e7eaa48739e5c948a79b3bf9, type: 3}
   portalPrefab: {fileID: 2505842625584844222, guid: cfc3506050ee9492aafff8f0cf74ae65, type: 3}
+  playerOneRenderer: {fileID: 1746018678}
+  playerTwoRenderer: {fileID: 2011380760}
+  playerOneMaterial: {fileID: 2100000, guid: 0dea2496cd8dd4ba782970e989d993fc, type: 2}
+  playerTwoMaterial: {fileID: 2100000, guid: 6573d627d04b84b1ebb9980903d33dfd, type: 2}
 --- !u!4 &1693216785
 Transform:
   m_ObjectHideFlags: 0
@@ -1254,7 +1258,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0311a2d38837344608cd2f2bdef55e1d, type: 2}
+  - {fileID: 2100000, guid: 0dea2496cd8dd4ba782970e989d993fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
