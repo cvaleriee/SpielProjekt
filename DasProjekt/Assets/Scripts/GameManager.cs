@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerOne;
     public GameObject playerTwo;
+    public GameObject Wolke;
 
     public TextMeshProUGUI scoreText;
     private int score;
@@ -42,16 +43,21 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI startText;
     public Button startButton;
 
+    public TextMeshProUGUI instructionsText;
+
     public bool isGameActive = false; 
     // Start is called before the first frame update
     void Start()
     {
         startText.gameObject.SetActive(true);
         startButton.gameObject.SetActive(true);
+        instructionsText.gameObject.SetActive(true);
 
         playerOne.SetActive(false);
         playerTwo.SetActive(false);
         scoreText.gameObject.SetActive(false);
+        Wolke.SetActive(false);
+
     }
 
     public void StartGame()
@@ -60,14 +66,12 @@ public class GameManager : MonoBehaviour
         
         startText.gameObject.SetActive(false);
         startButton.gameObject.SetActive(false);
-
-        playerOne.SetActive(false);
-        playerTwo.SetActive(false);
-        scoreText.gameObject.SetActive(false);
+        instructionsText.gameObject.SetActive(false);
 
         playerOne.SetActive(true);
         playerTwo.SetActive(true);
         scoreText.gameObject.SetActive(true);
+        Wolke.SetActive(true);
 
         beginningGravity = Physics.gravity;
 
@@ -165,8 +169,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isGameActive = false;
-        playerOne.SetActive(false);
-        playerTwo.SetActive(false);
 
         gameOverText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
@@ -174,21 +176,9 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        var p1Controller = playerOne.GetComponent<PlayerController>();
-        var p2Controller = playerTwo.GetComponent<PlayerController>();
-        p1Controller.gameOver = false;
-        p1Controller.isOnGround = true;
-        p1Controller.hitPortal = 0;
-
-        p2Controller.gameOver = false;
-        p2Controller.isOnGround = true;
-        p2Controller.hitPortal = 0;
-
-        gameOverText.gameObject.SetActive(false);
-        restartButton.gameObject.SetActive(false);
-        
-
-        StopAllCoroutines();
-        StartGame();
+        Physics.gravity = beginningGravity;
+        isGameActive = true;
+        Debug.Log("Restart");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -272,7 +272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &524903573
 RectTransform:
   m_ObjectHideFlags: 0
@@ -289,7 +289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 470, y: 140}
+  m_AnchoredPosition: {x: 150, y: 30}
   m_SizeDelta: {x: 660, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &524903574
@@ -312,10 +312,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player 1: Spacebar (Jump) + "A" Destroy
-
-    Player 2: Enter (Jump) +
-    "P" Destroy'
+  m_text: "Introductions\n\nPlayer 1 --- Spacebar (Jump) \n\t        \"A\" Destroy
+    incoming Objects while flying\n\nPlayer 2 --- Enter (Jump)\n\t        \"P\" Destroy
+    incoming Objects while flying"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -324,8 +323,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278650631
-  m_fontColor: {r: 0.028301895, g: 0.028168395, b: 0.028168395, a: 1}
+    rgba: 4283179547
+  m_fontColor: {r: 0.105882354, g: 0.13333334, b: 0.29803923, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -342,8 +341,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -797,8 +796,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283179547
-  m_fontColor: {r: 0.105882354, g: 0.13333334, b: 0.29803923, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1469,7 +1468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 80}
   m_SizeDelta: {x: 800, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1352267939
@@ -1847,6 +1846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerOne: {fileID: 1746018676}
   playerTwo: {fileID: 2011380756}
+  Wolke: {fileID: 1262152249}
   scoreText: {fileID: 828858579}
   obstacles:
   - {fileID: 6989750876255458244, guid: e13c3650006eb4674b6bfcf73d291dad, type: 3}
@@ -1854,12 +1854,13 @@ MonoBehaviour:
   portalPrefab: {fileID: 2505842625584844222, guid: cfc3506050ee9492aafff8f0cf74ae65, type: 3}
   playerOneRenderer: {fileID: 1746018678}
   playerTwoRenderer: {fileID: 2011380760}
-  playerOneMaterial: {fileID: 2100000, guid: 0dea2496cd8dd4ba782970e989d993fc, type: 2}
+  playerOneMaterial: {fileID: 2100000, guid: 0311a2d38837344608cd2f2bdef55e1d, type: 2}
   playerTwoMaterial: {fileID: 2100000, guid: 6573d627d04b84b1ebb9980903d33dfd, type: 2}
   gameOverText: {fileID: 1290793568}
   restartButton: {fileID: 123231749}
   startText: {fileID: 1352267939}
   startButton: {fileID: 1934271456}
+  instructionsText: {fileID: 524903574}
   isGameActive: 0
 --- !u!4 &1693216785
 Transform:
@@ -1938,7 +1939,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0dea2496cd8dd4ba782970e989d993fc, type: 2}
+  - {fileID: 2100000, guid: 0311a2d38837344608cd2f2bdef55e1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2171,7 +2172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -70}
+  m_AnchoredPosition: {x: 0, y: -194}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1934271456
@@ -2195,7 +2196,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.105882354, g: 0.13333334, b: 0.29411766, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
